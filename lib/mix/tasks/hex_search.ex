@@ -1,4 +1,4 @@
-defmodule Mix.Tasks.ModuleSearch do
+defmodule Mix.Tasks.HexSearch do
   use Mix.Task
 
   alias HexSearch.Core.Search
@@ -20,19 +20,7 @@ defmodule Mix.Tasks.ModuleSearch do
     module = parsed_args[:module] || module
     function = parsed_args[:function] || function
 
-    {module, function}
-    |> build_search_url
-    |> Search.search()
-  end
-
-  defp build_search_url({module, nil}) do
-    parse_module(module) <> ".html"
-  end
-
-  defp build_search_url(args) do
-    {module, function} = args
-
-    parse_module(module) <> ".html##{function}"
+    Search.search({module, function})
   end
 
   defp extract_string_args(string_args) do
@@ -40,15 +28,6 @@ defmodule Mix.Tasks.ModuleSearch do
       [] -> {nil, nil}
       [module] -> {module, nil}
       [module | function] -> {module, function}
-    end
-  end
-
-  defp parse_module(module) do
-    module
-    |> String.split(".", trim: true)
-    |> case do
-      [module] -> "#{String.downcase(module)}/#{String.capitalize(module)}"
-      [module, sub_module] -> "#{String.downcase(module)}/#{String.capitalize(module)}.#{String.capitalize(sub_module)}"
     end
   end
 end

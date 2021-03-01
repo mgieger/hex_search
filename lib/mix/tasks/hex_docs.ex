@@ -4,6 +4,6 @@ defmodule Mix.Tasks.HexDocs do
   alias HexSearch.Core.Search
 
   def run(_args) do
-    Search.hex_docs()
+    Search.search("")
   end
 end
