@@ -19,3 +19,8 @@ Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_do
 and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
 be found at [https://hexdocs.pm/hex_search](https://hexdocs.pm/hex_search).
 
+TODO
+installation
+how to call from base directory
+shell function setup
+limitations -> can't do modules with more than 1 dot, doesn't have access to all core modules, doesn't include exception modules (though I don't believe any of them have information on their pages anyway...).

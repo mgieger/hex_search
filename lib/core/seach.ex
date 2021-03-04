@@ -1,4 +1,6 @@
 defmodule HexSearch.Core.Search do
+  alias HexSearch.Core.ElixirModules
+
   @hex_doc_base_url "https://hexdocs.pm/"
 
   def base_url(), do: @hex_doc_base_url
@@ -17,12 +19,6 @@ defmodule HexSearch.Core.Search do
     open_url(search_string)
   end
 
-  # TODO:
-  #  split module along . / get submodule
-  #  check against elixir core lang modules
-  #  get portion following base url
-  #  get <module>.html
-  #  get #<function>
   def build_search_url(args) do
     {module, function} = args
 
@@ -35,7 +31,6 @@ defmodule HexSearch.Core.Search do
   end
 
   defp generate_url({module, nil}) do
-    #todo must parse module here for . module calls
     create_module_string(module) <> ".html"
   end
 
@@ -50,13 +45,11 @@ defmodule HexSearch.Core.Search do
 
   defp create_module_string("elixir"), do: create_module_string("elixir", "Kernel")
 
-  #TODO verify it works
-  # defp create_module_string(module) when module in @core_modules do
-  #   create_module_string("elixir", module)
-  # end
-
   defp create_module_string(module) when is_binary(module) do
-    create_module_string(module, module)
+    case String.downcase(module) in ElixirModules.core_module_keys do
+      true -> create_module_string("elixir", module)
+      false -> create_module_string(module, module)
+    end
   end
 
   defp create_module_string([module]) do
@@ -66,7 +59,10 @@ defmodule HexSearch.Core.Search do
   defp create_module_string(arg_list) do
     [module, sub_module] = arg_list
 
-    create_module_string(module, module) <> ".#{String.capitalize(sub_module)}"
+    case String.downcase(module) == "elixir" do
+      true -> create_module_string("elixir", sub_module)
+      false -> create_module_string(module, module) <> (".#{String.capitalize(sub_module)}")
+    end
   end
 
   defp create_module_string(mod_one, mod_two) do

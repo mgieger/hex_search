@@ -3,13 +3,9 @@ defmodule HexSearch.Core.SearchTest do
 
   alias HexSearch.Core.Search
 
-  #TODO use floki and verify the page title or url?
-  #       do this in a hex_search_test.ex
-  #TODO this block goes with the hex search tests
-  # describe "When no module is provided," do
-  #   test "it generates the " do
-  #   end
-  # end
+  test "module and sub_module can be uppercase" do
+    assert Search.build_search_url({"Ecto.Changeset", "assoc/2"}) == "ecto/Ecto.Changeset.html#assoc/2"
+  end
 
   describe "When module is not 'elixir' or a core language module," do
     setup [:ecto_module]
@@ -23,11 +19,11 @@ defmodule HexSearch.Core.SearchTest do
     end
 
     test "It builds the url when a module with a sub-module is provided", %{module: module} do
-      assert Search.build_search_url({module <> ".Changeset", nil}) == "ecto/Ecto.Changeset.html"
+      assert Search.build_search_url({module <> ".changeset", nil}) == "ecto/Ecto.Changeset.html"
     end
 
     test "It builds the url when a module, sub-module, and function is provided", %{module: module} do
-      assert Search.build_search_url({module <> ".Changeset", "cast/4"}) == "ecto/Ecto.Changeset.html#cast/4"
+      assert Search.build_search_url({module <> ".changeset", "cast/4"}) == "ecto/Ecto.Changeset.html#cast/4"
     end
   end
 
@@ -43,11 +39,11 @@ defmodule HexSearch.Core.SearchTest do
     end
 
     test "It builds the url when a module with a sub-module is provided", %{module: module} do
-      assert Search.build_search_url({module <> ".Enum", nil}) == "elixir/Enum.html"
+      assert Search.build_search_url({module <> ".enum", nil}) == "elixir/Enum.html"
     end
 
     test "It builds the url when a module, sub-module, and function is provided", %{module: module} do
-      assert Search.build_search_url({module <> ".Enum", "apply/2"}) == "elixir/Enum.html#apply/2"
+      assert Search.build_search_url({module <> ".enum", "apply/2"}) == "elixir/Enum.html#apply/2"
     end
   end
 
