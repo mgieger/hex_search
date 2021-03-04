@@ -27,7 +27,7 @@ defmodule Mix.Tasks.HexSearch do
     case string_args do
       [] -> {nil, nil}
       [module] -> {module, nil}
-      [module | function] -> {module, function}
+      [module | [function]] -> {module, function}
     end
   end
 end
