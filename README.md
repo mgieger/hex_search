@@ -1,7 +1,7 @@
 # HexSearch
 
 ## Overview
-Open the Elixir language Hex documentation website from the command line. Search can be performed with module name and or function name with arity. 
+Open the Elixir language Hex documentation website from the command line. Search can be performed with module name and / or function name with arity.
 
 ## Installation
 I recommend installing Elixir with [asdf](https://asdf-vm.com/#/core-manage-asdf)
@@ -48,6 +48,6 @@ function hex {
 
 ## Limitations
 * Can only search for modules with one ".". It will fail to parse properly for modules with more than one ".", such as Ecto.Schema.Metadata
-* Modules with camel cased titles may not be searchable unless they are entered with the same camel casing from the command line. ie. ```Ecto.ParameterizedType.``` will need to have the "T" in type be entered as an uppercase letter ```mix hex_search ecto.parameterizedType``` Many of the core language modules which are camel cased support case insensitivity on the command line. For further details see `lib/core/elixir_modules.ex` `@core_modules` for supported modules.
+* Modules and functions with camel cased titles may not be searchable unless they are entered with the same camel casing from the command line. ie. ```Ecto.ParameterizedType.``` will need to have the "T" in type be entered as an uppercase letter ```mix hex_search ecto.parameterizedType``` Many of the core language modules which are camel cased support case insensitivity on the command line. For further details see `lib/core/elixir_modules.ex` `@core_modules` for supported modules.
 * Some core language modules aren't supported for direct lookup. In that instance, it is recommended to manually navigate to the desired module from the main kernel document page.
 * Does not support the opening of the core language exception modules directly. 
