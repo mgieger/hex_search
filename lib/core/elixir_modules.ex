@@ -65,6 +65,6 @@ defmodule HexSearch.Core.ElixirModules do
   end
 
   def core_module_keys() do
-    Enum.reduce(@core_modules, [], fn {module, value}, acc -> [module] ++ acc end)
+    Enum.reduce(@core_modules, [], fn {module, _value}, acc -> [module] ++ acc end)
   end
 end
