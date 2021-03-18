@@ -59,6 +59,22 @@ defmodule HexSearch.Core.SearchTest do
     end
   end
 
+  describe "When module is a camel-cased core language module," do
+    setup [:datetime_module]
+
+    test "It builds the module url", %{module: module} do
+      assert Search.build_search_url({module, nil}) == "elixir/DateTime.html"
+    end
+
+    test "It builds the url when a module and function are provided", %{module: module} do
+      assert Search.build_search_url({module, "add/4"}) == "elixir/DateTime.html#add/4"
+    end
+  end
+
+  defp datetime_module(context) do
+    {:ok, Map.put(context, :module, "datetime")}
+  end
+
   defp elixir_module(context) do
     {:ok, Map.put(context, :module, "elixir")}
   end

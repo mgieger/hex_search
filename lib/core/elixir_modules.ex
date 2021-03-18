@@ -1,5 +1,4 @@
 defmodule HexSearch.Core.ElixirModules do
-  @elixir "elixir"
   @core_modules %{
     "access" => "Access",
     "agent" => "Agent",

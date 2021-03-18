@@ -47,8 +47,12 @@ defmodule HexSearch.Core.Search do
 
   defp create_module_string(module) when is_binary(module) do
     case String.downcase(module) in ElixirModules.core_module_keys do
-      true -> create_module_string("elixir", module)
-      false -> create_module_string(module, module)
+      true ->
+        module = Map.get(ElixirModules.core_modules, String.downcase(module), module)
+        create_module_string("elixir", module)
+
+        false ->
+          create_module_string(module, module)
     end
   end
 
@@ -66,7 +70,11 @@ defmodule HexSearch.Core.Search do
   end
 
   defp create_module_string(mod_one, mod_two) do
-    "#{String.downcase(mod_one)}/#{String.capitalize(mod_two)}"
+    "#{String.downcase(mod_one)}/#{capitalize(mod_two)}"
+  end
+
+  defp capitalize(word) do
+    (String.slice(word, 0, 1) |> String.upcase()) <> String.slice(word, 1..-1)
   end
 
   defp uncapitalize(word) do
