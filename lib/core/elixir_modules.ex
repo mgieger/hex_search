@@ -56,7 +56,7 @@ defmodule HexSearch.Core.ElixirModules do
     "time" => "Time",
     "tuple" => "Tuple",
     "uri" => "URI",
-    "version" => "Version",
+    "version" => "Version"
   }
 
   def core_modules() do

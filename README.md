@@ -11,21 +11,41 @@ Clone the repo. Since these commands are run as mix tasks, no further steps are 
 ## Usage
 Commands are run via a mix task from the base level directory of this repository and can be run in a variety of ways:
 * For the hex docs main page:
+
   ```mix hex_docs```
 
 * For the Kernel / core language module docs: 
+
   ```mix hex_search```
 
 * To search for a specific module:
+
   ```mix hex_search <module_name>```
+
   ie. ```mix hex_search ecto```
 
+  or use the `-m` flag
+
+  ```mix hex_search -m <module_name>```
+
+  ie. ```mix hex_search -m ecto```
+
 * To search for a specific function within a module:
+
+  Place the function name / arity as the next command line argument
+
   ```mix hex_search <module_name> <function_name/arity>```
+
   ie. ```mix hex_search ecto assoc/2```
 
+  or use the `-f` flag
+
+  ```mix hex_search <module_name> -f <function_name/arity>```
+
+  ie. ```mix hex_search ecto -f assoc/2```
+
 Commands will work with one "." in the module:
-* ie. ```mix hex_search ecto.changeset cast/4```
+* ie. ```mix hex_search ecto.changeset -f cast/4```
 
 Commands are generally case insensitive with a few exceptions (listed below)
 
