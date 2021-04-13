@@ -25,7 +25,7 @@ defmodule HexSearch.Core.Search do
     module =
       module
       |> uncapitalize()
-      |> parse_module()
+      |> String.split(".", trim: true)
 
     generate_url({module, function})
   end
@@ -38,21 +38,16 @@ defmodule HexSearch.Core.Search do
     create_module_string(module) <> ".html##{function}"
   end
 
-  defp parse_module(module) do
-    module
-    |> String.split(".", trim: true)
-  end
-
   defp create_module_string("elixir"), do: create_module_string("elixir", "Kernel")
 
   defp create_module_string(module) when is_binary(module) do
-    case String.downcase(module) in ElixirModules.core_module_keys do
+    case String.downcase(module) in ElixirModules.core_module_keys() do
       true ->
-        module = Map.get(ElixirModules.core_modules, String.downcase(module), module)
+        module = Map.get(ElixirModules.core_modules(), String.downcase(module), module)
         create_module_string("elixir", module)
 
-        false ->
-          create_module_string(module, module)
+      false ->
+        create_module_string(module, module)
     end
   end
 
@@ -65,12 +60,25 @@ defmodule HexSearch.Core.Search do
 
     case String.downcase(module) == "elixir" do
       true -> create_module_string("elixir", sub_module)
-      false -> create_module_string(module, module) <> (".#{String.capitalize(sub_module)}")
+      false -> create_module_string(module, module) <> ".#{String.capitalize(sub_module)}"
     end
   end
 
   defp create_module_string(mod_one, mod_two) do
+    mod_two = maybe_replace_underscores(mod_two)
     "#{String.downcase(mod_one)}/#{capitalize(mod_two)}"
+  end
+
+  defp maybe_replace_underscores(module) do
+    case String.contains?(module, "_") do
+      false ->
+        module
+
+      true ->
+        String.split(module, "_")
+        |> Enum.map(&capitalize(&1))
+        |> Enum.join("")
+    end
   end
 
   defp capitalize(word) do
