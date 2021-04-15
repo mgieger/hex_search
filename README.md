@@ -65,6 +65,9 @@ function hex {
     cd -
 }
 ```
+This function allows for the mix task to be called with just `hex`. ie:
+
+```hex ecto -f assoc/2```
 
 ## Limitations
 * Can only search for modules with one ".". It will fail to parse properly for modules with more than one ".", such as Ecto.Schema.Metadata
